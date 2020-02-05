@@ -1,3 +1,3 @@
 import os
 
-print('About to create a child, my pid is ' + os.getpid())
+print('About to create a child, my pid is ' + str(os.getpid()))
