@@ -7,7 +7,7 @@ print('I\'m about to create a child process, my pid is ' + str(os.getpid()))
 # use os.fork to create child process here
 pid = os.fork()
 if pid == 0:
-    print('I am a child process, my pid is ' + str(os.getpid()) + '. My ppid is ' + str(os.getppid()))
+    print('I am a child process, my pid is ' + str(os.getpid()) + '\n. My ppid is ' + str(os.getppid()))
 
 # make the child process sleep for 20 seconds and then exit
 time.sleep(20)
