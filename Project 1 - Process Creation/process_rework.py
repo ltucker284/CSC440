@@ -33,7 +33,7 @@ def terminate_child_process(child_process_id, parent_process_id):
         print(f"The child process has been terminated. My pid is: {parent_process_id}")
 
 def main():
-    """This functioin handles the script logic"""
+    """This function handles the script logic"""
     parent_process_id = os.getpid()  # os.getpid() obtains the process id. 
     print(f"Hello, I am the parent process. Here is my pid: {parent_process_id}")
     user_input = input("Would you like to create a child process? (y/n) ")
