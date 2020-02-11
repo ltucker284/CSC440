@@ -15,12 +15,11 @@ import time
 def create_child_process(parent_process_id):
     """This function creates the child process"""
     pid = os.fork()  # os.fork() creates a child process. If succesful it returns 0, and the parent's process id.
-    if pid:  # We do not care about the parent's process id, so we pass.
-        pass
-        # parent_process_id = os.getpid()
-    else:
-        child_process_id = os.getpid()  # Obtains the process id of the child process. 
-        print(f"Hello, I am the child process. Here is my pid: {child_process_id}")
+    if pid  == 0:  # We are in the child process.
+        child_process_id = os.getpid()
+        parent_process_id = os.getppid()
+        print(f"Hello, I am the child process. Here is my pid: {child_process_id}. The process id of my parent is: {parent_process_id}")
+
         time.sleep(20)  # Script waits 20 seconds before the child process is terminated. 
         terminate_child_process(child_process_id, parent_process_id)
 
