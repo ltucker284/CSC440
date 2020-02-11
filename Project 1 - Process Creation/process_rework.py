@@ -12,7 +12,7 @@ import signal
 import sys
 import time
 
-def create_child_process(parent_process_id):
+def create_child_process():
     """This function creates the child process"""
     pid = os.fork()  # os.fork() creates a child process. If succesful it returns 0, and the parent's process id.
     if pid  == 0:  # We are in the child process.
@@ -38,7 +38,7 @@ def main():
     user_input = input("Would you like to create a child process? (y/n) ")
 
     if user_input == "y":
-        create_child_process(parent_process_id)
+        create_child_process()
     else:
         print("Goodbye!")
         sys.exit()
