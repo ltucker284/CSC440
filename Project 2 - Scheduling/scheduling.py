@@ -8,18 +8,19 @@ def arrival_time(list_of_processes):
     for process in list_of_processes:
         interarrival_time = 4 + random.randint(4, 8)  # interarrival time is the time between successive arrivals.
         if process == list_of_processes[-1]:
-            arrival_time_dict[process] = "N/A"
+            arrival_time_dict[process] = 0
         else:
             arrival_time_dict[process] = interarrival_time
 
     for process in arrival_time_dict:
-        if arrival_time_dict[process] == "N/A":
-            pass
-        else:
-            average_interarrival_time += arrival_time_dict[process]  # Adds the current interarrival time plus the next. 
+        average_interarrival_time += arrival_time_dict[process]  # Adds the current interarrival time plus the next. 
+        if process == 0:
+            
+        process_info = (f"Interarrival time: {str(arrival_time_dict[process])}", f"Arrivalaverage_interarrival_time")
+        arrival_time_dict[process] = process_info
 
-    total_processes= len(list_of_processes) - 2
-    print(f"The average interarrival time is : {str(average_interarrival_time/total_processes)} ")
+    print(arrival_time_dict)
+    print(f"The average interarrival time is : {str(average_interarrival_time/len(list_of_processes))} ")
 
 # def service_time(list_of_processes):
 #     service_time_dict = {}
@@ -28,7 +29,8 @@ def arrival_time(list_of_processes):
 #         pass
 
 def main():
-    list_of_processes = list(range(0,101))
+    list_of_processes = list(range(0,100))
+    print(len(list_of_processes))
     arrival_time(list_of_processes)
     # service_time(list_of_processes)
     
