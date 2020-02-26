@@ -1,11 +1,15 @@
 import random
+import sys
 
 def arrival_time(list_of_processes):
     arrival_time_dict = {}
     for process in list_of_processes:
-        inter_arrival_time = 4 + random.randint(4, 8) 
-        arrival_time_dict[process] = inter_arrival_time
-    
+        interarrival_time = 4 + random.randint(4, 8)  # interarrival time is the time between successive arrivals.
+        if process == list_of_processes[-1]:
+            arrival_time_dict[process] = "N/A"
+        else:
+            arrival_time_dict[process] = interarrival_time
+            
     print(arrival_time_dict)
 
 # def service_time(list_of_processes):
