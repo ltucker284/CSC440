@@ -42,7 +42,7 @@ def service_time(list_of_processes):
 
     for time in service_time_dict:
         average_service_time += service_time_dict[time]
-    print(f"The average service time is : {str(average_service_time/len(list_of_processes))}")
+    print(f"\nThe average service time is : {str(average_service_time/len(list_of_processes))}")
 
 def main():
     """This process handles the script logic"""
