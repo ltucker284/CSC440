@@ -48,6 +48,7 @@ def main():
     """This process handles the script logic"""
     list_of_processes = list(range(0,100))
     master_list = arrival_time(list_of_processes)
+    
     user_input = input("Print Process?: (y/n) ")
     while user_input != 'n':
         for index in range(len(master_list)):
