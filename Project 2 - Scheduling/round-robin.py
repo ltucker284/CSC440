@@ -1,28 +1,23 @@
+from collections import deque
 
-quantum = 15
-process_dict = {
-    1:{
-        "Service Time":75,
-        "Arrival Time":0
-    },
-    2:{
-        "Service Time":40,
-        "Arrival Time":10
-    },
-    3:{
-        "Service Time":25,
-        "Arrival Time":10
-    },
-    4:{
-        "Service Time":20,
-        "Arrival Time":80
-    },
-    5:{
-        "Service Time":45,
-        "Arrival Time":85
-    }
-}
+service_time_list = [75, 40, 25, 20, 45]
+arrival_time_list = [0, 10, 10, 80, 85]
 
-def round_robin():
+def round_robin(*iterables):
     start_time = 0
+    quantum = 15
+    # create a deque of itearble objects
+    iterators = deque(map(iter, iterables))
+    # while there's stuff in iterators, keep going
+    while iterators:
+        try:
+            # while True essentially means forever until there's nothing left to be done in the loop
+            while True:
+                yield next(iterators[0])
+                iterators.rotate(-1)
+        except StopIteration:
+            # Remove an exhausted iterator.
+            iterators.popleft()
     
+for value in round_robin(service_time_list, arrival_time_list):
+    print(value)
