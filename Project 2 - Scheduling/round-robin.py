@@ -10,11 +10,16 @@ def round_robin(*iterables):
     quantum = 15
     process_deque = deque()
     # create a deque of itearble objects
-    print(iterables[1])
     while True:
-        for time in iterables[1]:
-            if time <= start_time:
-                process_deque.append()
+        try:
+            for process_id in iterables[0]:
+                start_time += quantum
+                if iterables[0][process_id]['Arrival Time'] <= start_time:
+                    process_deque.append(iterables[0][process_id])
+                print(process_deque)
+        except StopIteration:
+            process_deque.popleft()
+
 
 
 
@@ -31,4 +36,32 @@ def round_robin(*iterables):
     
 # for value in round_robin(arrival_time_list, service_time_list):
 #     print(value)
-round_robin(process_id_list, arrival_time_list, service_time_list)
+
+def main():
+    process_dict = {
+        1:{
+            "Service Time":75,
+            "Arrival Time":0
+        },
+        2:{
+            "Service Time":40,
+            "Arrival Time":10
+        },
+        3:{
+            "Service Time":25,
+            "Arrival Time":10
+        },
+        4:{
+            "Service Time":20,
+            "Arrival Time":80
+        },
+        5:{
+            "Service Time":45,
+            "Arrival Time":85
+        }
+    }
+
+    round_robin(process_dict)
+
+if __name__ == "__main__":
+    main()
