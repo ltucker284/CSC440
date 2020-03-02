@@ -5,20 +5,25 @@ def round_robin(*iterables):
     start_time = 0
     quantum = 15
     process_deque = deque()
-    # create while loop to check that all service times are greater than 0
-    for process_id in iterables[0]:
-        while iterables[0][process_id]['Service Time'] > 0:
-            if iterables[0][process_id]['Arrival Time'] <= start_time and iterables[0][process_id] not in process_deque:
-                process_deque.append(iterables[0][process_id])
-                print(process_deque)
-            process_deque[0]['Service Time'] = process_deque[0]['Service Time'] - quantum
-            process_deque.rotate(-1)
+    for item in iterables:
+        for item in item:
+            process_deque.append(item)
+    while process_deque[0][2] > 0:
+        if process_deque[0][1] <= start_time:
+            process_deque[0][2] = process_deque[0][2] - quantum
             start_time += quantum
-            print(start_time)
-            if process_deque[0]['Service Time'] < 0:
-                process_deque.popleft()
+            if process_deque[-1][-1] <= 0:
+                process_deque.pop()
+            process_deque.rotate(-1)
+        else: 
+            process_deque.rotate(-1)
+        print(f"Execution Time: {start_time}", process_deque)
+        if len(process_deque) == 0:
+            break
+
 
 def main():
+    process_list = [[1,0,75],[2,10,40],[3,10,25],[4, 80,20],[5,85,45]]
     process_dict = {
         1:{
             "Process Id": 1,
@@ -47,7 +52,7 @@ def main():
         }
     }
 
-    round_robin(process_dict)
+    round_robin(process_list)
 
 if __name__ == "__main__":
     main()
