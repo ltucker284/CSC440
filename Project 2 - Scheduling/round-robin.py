@@ -1,7 +1,7 @@
 from collections import deque
 
 # pass in any number of iterable items
-def round_robin(*iterables):
+def round_robin(answer_dict, *iterables):
     start_time = 0
     quantum = 15
     process_deque = deque()
@@ -10,6 +10,11 @@ def round_robin(*iterables):
             process_deque.append(item)
     while process_deque[0][2] > 0:
         if process_deque[0][1] <= start_time:
+            if process_deque[0][0] in answer_dict:
+                answer_dict[process_deque[0][0]]['Start Time'] = start_time
+                print(answer_dict)
+
+                
             process_deque[0][2] = process_deque[0][2] - quantum
             start_time += quantum
             if process_deque[-1][-1] <= 0:
@@ -20,39 +25,35 @@ def round_robin(*iterables):
         print(f"Execution Time: {start_time}", process_deque)
         if len(process_deque) == 0:
             break
+    return answer_dict
 
 
 def main():
     process_list = [[1,0,75],[2,10,40],[3,10,25],[4, 80,20],[5,85,45]]
     process_dict = {
         1:{
-            "Process Id": 1,
             "Service Time":75,
             "Arrival Time":0
         },
         2:{
-            "Process Id": 2,
             "Service Time":40,
             "Arrival Time":10
         },
         3:{
-            "Process Id": 3,
             "Service Time":25,
             "Arrival Time":10
         },
         4:{
-            "Process Id": 4,
             "Service Time":20,
             "Arrival Time":80
         },
         5:{
-            "Process Id": 5,
             "Service Time":45,
             "Arrival Time":85
         }
     }
 
-    round_robin(process_list)
+    print(round_robin(process_dict, process_list))
 
 if __name__ == "__main__":
     main()
