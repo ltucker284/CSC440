@@ -12,12 +12,12 @@ def round_robin(*iterables):
     while process_deque[0][2] > 0:
         if process_deque[0][1] <= start_time:
             if process_deque[0][0] not in answer_dict:
-                answer_dict[process_deque[0][0]] = start_time
-                print(answer_dict)
-
+                answer_dict[process_deque[0][0]] = {}
+                answer_dict[process_deque[0][0]]['Start Time'] = start_time
             process_deque[0][2] = process_deque[0][2] - quantum
             start_time += quantum
             if process_deque[-1][-1] <= 0:
+                answer_dict[process_deque[-1][0]]['End Time'] = start_time
                 process_deque.pop()
             process_deque.rotate(-1)
         else: 
