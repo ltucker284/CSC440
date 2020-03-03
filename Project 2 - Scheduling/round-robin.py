@@ -30,6 +30,9 @@ def round_robin(*iterables):
 def calculate_init_wait(arrival_time, start_time):
     return start_time - arrival_time
 
+def calculate_total_wait(end_time, service_time, arrival_time):
+    return end_time - service_time - arrival_time
+
 def main():
     process_list = [[1,0,75],[2,10,40],[3,10,25],[4, 80,20],[5,85,45]]
     process_dict = {
@@ -57,7 +60,10 @@ def main():
 
     answer_dict = round_robin(process_list)
     for entry in answer_dict:
-        answer_dict[entry]['Initial Wait Time'] = calculate_init_wait(process_dict[entry]['Arrival Time'], answer_dict[entry]['Start Time'])
         print(answer_dict)
+        answer_dict[entry]['Initial Wait Time'] = calculate_init_wait(process_dict[entry]['Arrival Time'], answer_dict[entry]['Start Time'])
+        answer_dict[entry]['Total Wait Time'] = calculate_total_wait(answer_dict[entry]['End Time'], process_dict[entry]['Service Time'], process_dict[entry]['Arrival Time'])
+        
+
 if __name__ == "__main__":
     main()
