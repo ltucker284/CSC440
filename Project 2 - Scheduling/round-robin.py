@@ -9,7 +9,7 @@ def round_robin(*iterables):
     for item in iterables:
         for item in item:
             process_deque.append(item)
-    while process_deque[0][2] > 0:
+    while process_deque[0][2] >= 0:
         if process_deque[0][1] <= start_time:
             if process_deque[0][0] not in answer_dict:
                 answer_dict[process_deque[0][0]] = {}
