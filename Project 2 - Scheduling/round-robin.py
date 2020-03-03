@@ -27,6 +27,8 @@ def round_robin(*iterables):
             break
     return answer_dict
 
+def calculate_init_wait(arrival_time, start_time):
+    return start_time - arrival_time
 
 def main():
     process_list = [[1,0,75],[2,10,40],[3,10,25],[4, 80,20],[5,85,45]]
@@ -53,7 +55,9 @@ def main():
         }
     }
 
-    print(round_robin(process_list))
-
+    answer_dict = round_robin(process_list)
+    for entry in answer_dict:
+        answer_dict[entry]['Initial Wait Time'] = calculate_init_wait(process_dict[entry]['Arrival Time'], answer_dict[entry]['Start Time'])
+        print(answer_dict)
 if __name__ == "__main__":
     main()
