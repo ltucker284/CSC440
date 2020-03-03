@@ -1,15 +1,22 @@
 from collections import deque
 
 # pass in any number of iterable items
-def round_robin(*iterables):
+def create_deque(*iterables):
+    process_deque = deque()
+    for process in iterables:
+        for process_info in process:
+            process_deque.append(process_info)
+    
+    
+    return process_deque
+
+def round_robin(process_deque):
     start_time = 0
     quantum = 15
-    process_deque = deque()
     answer_dict = dict()
-    for item in iterables:
-        for item in item:
-            process_deque.append(item)
+
     while process_deque[0][2] >= 0:
+        print(f"Execution Time: {start_time}", process_deque)
         if process_deque[0][1] <= start_time:
             if process_deque[0][0] not in answer_dict:
                 answer_dict[process_deque[0][0]] = {}
@@ -22,9 +29,10 @@ def round_robin(*iterables):
             process_deque.rotate(-1)
         else: 
             process_deque.rotate(-1)
-        print(f"Execution Time: {start_time}", process_deque)
+        
         if len(process_deque) == 0:
             break
+        
     return answer_dict
 
 def calculate_init_wait(arrival_time, start_time):
@@ -58,7 +66,9 @@ def main():
         }
     }
 
-    answer_dict = round_robin(process_list)
+    process_deque = create_deque(process_list)
+    answer_dict = round_robin(process_deque)
+
     for entry in answer_dict:
         answer_dict[entry]['Initial Wait Time'] = calculate_init_wait(process_dict[entry]['Arrival Time'], answer_dict[entry]['Start Time'])
         answer_dict[entry]['Total Wait Time'] = calculate_total_wait(answer_dict[entry]['End Time'], process_dict[entry]['Service Time'], process_dict[entry]['Arrival Time'])
