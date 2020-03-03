@@ -11,7 +11,7 @@ import random
 def arrival_time(list_of_processes):
     """This function iterates through a list of processes and appends process, interarrival time, and arrival time to a new list."""
     master_list = []
-    average_interarrival_time = 0
+    interarrival_time = 0
 
     for process in list_of_processes:  # Iterates through a list of 100 processes.
         interarrival_time = 4 + random.randint(4,8)  # Generates an integer between 4 and 8, inclusive.
@@ -21,14 +21,14 @@ def arrival_time(list_of_processes):
             master_list.append([process, interarrival_time])
     
     for index in range(len(master_list)):  # Iterates through a list of indexes. 
-        average_interarrival_time += master_list[index][1]  # Adds the interarrival times of each value together.
+        interarrival_time += master_list[index][1]  # Adds the interarrival times of each value together.
         if master_list[index][0] == 0:  # The first process executes immediatly, thus its arrival time is zero.
             master_list[index].append(0)
         else:
             arrival_time = master_list[index-1][2] + master_list[index][1]  # Grabs the arrival time of the previous process and adds the interarrival time of the current process.
             master_list[index].append(arrival_time)
     
-    print(f"The Average Interarrival Time Is: {str(average_interarrival_time/len(list_of_processes))}")
+    print(f"The Average Interarrival Time Is: {str(interarrival_time/len(list_of_processes))}")
 
     return master_list
 
