@@ -20,28 +20,36 @@ def round_robin(process_deque):
     start_time = 0
     quantum = 15
     answer_dict = dict()
-    robin_deque = deque()
+    up_next = deque()
+    queue = deque()
     # create a do while loop that continues until each process has been 'serviced'
-    while process_deque[0][2] >= 0:
-        print(f"Execution Time: {start_time}", process_deque)
+    while process_deque[0][2] >= 0 and len(process_deque) != 0:
+        print(f"Execution Time: {start_time}", queue)
+        #if a process has arrived, bring it in for service
         if process_deque[0][1] <= start_time:
             if process_deque[0][0] not in answer_dict:
                 answer_dict[process_deque[0][0]] = {}    
                 answer_dict[process_deque[0][0]]['Start Time'] = start_time
-            robin_deque.append(process_deque[0])
-            robin_deque[0][2] = robin_deque[0][2] - quantum
+            #give it a place in line
+            queue.append(process_deque[0])
+            process_deque.popleft()
+            #decrement service time
+            queue[0][2] = queue[0][2] - quantum
+            #increment time
             start_time += quantum
-            if robin_deque[0][2] <= 0:
-                answer_dict[robin_deque[0][0]]['End Time'] = start_time
-                robin_deque.pop()
-                process_deque.popleft()
-                robin_deque.append(process_deque[0])
+            #if a process is done, pop it for good
+            if queue[0][2] <= 0:
+                answer_dict[queue[0][0]]['End Time'] = start_time
+                queue.popleft()
             else:
-                process_deque.popleft()
-                process_deque.append(robin_deque[0])
-                robin_deque.pop()
+                #put it at the end of the line
+                queue.rotate(-1)
+        #if a process isn't ready, ignore it and process what's already there
         else: 
-            process_deque.rotate(-1)
+            start_time+=quantum
+            queue[0][2] = queue[0][2] - quantum
+            queue.rotate(-1)
+
 
         if len(process_deque) == 0:
             break
