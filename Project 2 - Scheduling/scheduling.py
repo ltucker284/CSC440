@@ -14,7 +14,7 @@ def arrival_time(list_of_processes):
     interarrival_time = 0
 
     for process in list_of_processes:  # Iterates through a list of 100 processes.
-        interarrival_time = random.randint(4,8)  # Generates an integer between 4 and 8, inclusive.
+        interarrival_time = random.randint(4,10)  # Generates an integer between 4 and 8, inclusive.
         if process == list_of_processes[0]:  # First process does not get an interarrival time, thus it gets a zero for this value.
             master_list.append([process, 0])
         else:
@@ -46,9 +46,19 @@ def service_time(list_of_processes, master_list):
     print(f"\nThe average service time is : {str(average_service_time/len(list_of_processes))}")
     return master_list
 
+# def create_dictinary(master_list):
+#     process_dict = {}
+#     for process in master_list:
+#         process_dict[f"Process ID: {str(process[0])}"]["Interarrival Time"] = process[1]
+#         process_dict[f"Process ID: {str(process[0])}"]["Arrival Time"] = process[2]
+#         process_dict[f"Process ID: {str(process[0])}"]["Service Time"] = process[3]
+    
+#     print(process_dict)
+
+
 def main():
     """This process handles the script logic"""
-    list_of_processes = list(range(0,100))
+    list_of_processes = list(range(0,1000))
     master_list = arrival_time(list_of_processes)
     
     user_input = input("Print Process?: (y/n) ")
@@ -59,8 +69,9 @@ def main():
             if user_input == 'n':
                 break
 
-    service_time(list_of_processes, master_list)
+    master_list = service_time(list_of_processes, master_list)
     print(master_list)
+    # create_dictinary(master_list)
     
 
 
