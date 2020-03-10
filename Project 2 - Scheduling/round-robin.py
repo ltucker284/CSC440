@@ -21,7 +21,7 @@ def round_robin(process_deque):
     quantum = 15
     answer_dict = dict()
     # create a do while loop that continues until each process has been 'serviced'
-    while process_deque[0][2] > 0:
+    while process_deque[0][2] >= 0:
         print(f"Execution Time: {start_time}", process_deque)
         # if a process's arrival time is <= the start time, then it has 'arrived'
         if process_deque[0][1] <= start_time:
