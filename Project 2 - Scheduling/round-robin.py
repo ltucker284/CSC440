@@ -25,7 +25,6 @@ def round_robin(process_deque):
     answer_dict = dict()
     # create a do while loop that continues until each process has been 'serviced'
     while process_deque[0][3] >= 0:
-        
         # if a process's arrival time is <= the start time, then it has 'arrived'
         if process_deque[0][2] <= start_time:
             # if a process id is not in answer_dict, go into this if check
@@ -51,7 +50,7 @@ def round_robin(process_deque):
             # has arrived gets to the first position
             process_deque.rotate(-1)
             start_time += quantum
-        print(f"Execution Time: {start_time}", process_deque)
+        # print(f"Execution Time: {start_time}", process_deque)
         # if there's no more items left in the deque, break the while loop
         if len(process_deque) == 0:
             break
@@ -76,13 +75,13 @@ def main():
     answer_dict = round_robin(process_deque)
 
     # for every process in the answer dict, do the stuff below
-    # for entry in answer_dict:
+    for entry in answer_dict:
         # get the initial wait time for each process
-    #     answer_dict[entry]['Initial Wait Time'] = calculate_init_wait(process_dict[entry]['Arrival Time'], answer_dict[entry]['Start Time'])
+        answer_dict[entry]['Initial Wait Time'] = calculate_init_wait(master_list[entry][2], answer_dict[entry]['Start Time'])
         # get the total wait time of all the processes
-    #     answer_dict[entry]['Total Wait Time'] = calculate_total_wait(answer_dict[entry]['End Time'], process_dict[entry]['Service Time'], process_dict[entry]['Arrival Time'])
-    # print the dict
-    # print(f"Answers: {answer_dict}")
+        answer_dict[entry]['Total Wait Time'] = calculate_total_wait(answer_dict[entry]['End Time'], master_list[entry][3], master_list[entry][2])
+        # print the dict
+        print(f"Answers: {answer_dict}")
 
 if __name__ == "__main__":
     main()
