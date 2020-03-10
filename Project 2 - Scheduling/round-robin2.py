@@ -24,7 +24,7 @@ def round_robin(process_deque):
     queue = deque()
     # create a do while loop that continues until each process has been 'serviced'
     while process_deque[0][2] >= 0 and len(process_deque) != 0:
-        print(f"Execution Time: {start_time}", queue)
+        
         #if a process has arrived, bring it in for service
         if process_deque[0][1] <= start_time:
             if process_deque[0][0] not in answer_dict:
@@ -32,6 +32,8 @@ def round_robin(process_deque):
                 answer_dict[process_deque[0][0]]['Start Time'] = start_time
             #give it a place in line
             queue.append(process_deque[0])
+            queue.rotate(-1)
+            print(queue)
             process_deque.popleft()
             #decrement service time
             queue[0][2] = queue[0][2] - quantum
@@ -50,7 +52,7 @@ def round_robin(process_deque):
             queue[0][2] = queue[0][2] - quantum
             queue.rotate(-1)
 
-
+        print(f"Execution Time: {start_time}", queue)
         if len(process_deque) == 0:
             break
     
