@@ -70,28 +70,6 @@ def main():
     list_of_processes = list(range(0,1000))
     master_list = scheduling.arrival_time(list_of_processes)
     master_list = scheduling.service_time(list_of_processes, master_list)
-    # process_dict = {
-    #     1:{
-    #         "Service Time":75,
-    #         "Arrival Time":0
-    #     },
-    #     2:{
-    #         "Service Time":40,
-    #         "Arrival Time":10
-    #     },
-    #     3:{
-    #         "Service Time":25,
-    #         "Arrival Time":10
-    #     },
-    #     4:{
-    #         "Service Time":20,
-    #         "Arrival Time":80
-    #     },
-    #     5:{
-    #         "Service Time":45,
-    #         "Arrival Time":85
-    #     }
-    # }
     # create a deque of processes for round robin
     process_deque = create_deque(master_list)
     # store the answer dictionary which is the return value of the round_robin function
