@@ -7,6 +7,8 @@ Class: CSC 440
 Authors: Juan Matiz, Liz Tucker
 """
 from collections import deque
+import random
+import scheduling
 
 # pass in any number of iterable items
 def create_deque(*iterables):
@@ -62,42 +64,46 @@ def calculate_total_wait(end_time, service_time, arrival_time):
     return end_time - service_time - arrival_time
 
 def main():
-    process_list = [[1,0,75],[2,10,40],[3,10,25],[4, 80,20],[5,85,45]]
-    process_dict = {
-        1:{
-            "Service Time":75,
-            "Arrival Time":0
-        },
-        2:{
-            "Service Time":40,
-            "Arrival Time":10
-        },
-        3:{
-            "Service Time":25,
-            "Arrival Time":10
-        },
-        4:{
-            "Service Time":20,
-            "Arrival Time":80
-        },
-        5:{
-            "Service Time":45,
-            "Arrival Time":85
-        }
-    }
-    # create a deque of processes for round robin
-    process_deque = create_deque(process_list)
-    # store the answer dictionary which is the return value of the round_robin function
-    answer_dict = round_robin(process_deque)
+    list_of_processes = list(range(0,1000))
+    master_list = scheduling.arrival_time(list_of_processes)
+    master_list = scheduling.service_time(list_of_processes, master_list)
+    print(master_list)
+    # process_list = [[1,0,75],[2,10,40],[3,10,25],[4, 80,20],[5,85,45]]
+    # process_dict = {
+    #     1:{
+    #         "Service Time":75,
+    #         "Arrival Time":0
+    #     },
+    #     2:{
+    #         "Service Time":40,
+    #         "Arrival Time":10
+    #     },
+    #     3:{
+    #         "Service Time":25,
+    #         "Arrival Time":10
+    #     },
+    #     4:{
+    #         "Service Time":20,
+    #         "Arrival Time":80
+    #     },
+    #     5:{
+    #         "Service Time":45,
+    #         "Arrival Time":85
+    #     }
+    # }
+    # # create a deque of processes for round robin
+    # process_deque = create_deque(process_list)
+    # # store the answer dictionary which is the return value of the round_robin function
+    # answer_dict = round_robin(process_deque)
 
-    # for every process in the answer dict, do the stuff below
-    for entry in answer_dict:
-        # get the initial wait time for each process
-        answer_dict[entry]['Initial Wait Time'] = calculate_init_wait(process_dict[entry]['Arrival Time'], answer_dict[entry]['Start Time'])
-        # get the total wait time of all the processes
-        answer_dict[entry]['Total Wait Time'] = calculate_total_wait(answer_dict[entry]['End Time'], process_dict[entry]['Service Time'], process_dict[entry]['Arrival Time'])
-    # print the dict
-    print(f"Answers: {answer_dict}")
+    # # for every process in the answer dict, do the stuff below
+    # for entry in answer_dict:
+    #     # get the initial wait time for each process
+    #     answer_dict[entry]['Initial Wait Time'] = calculate_init_wait(process_dict[entry]['Arrival Time'], answer_dict[entry]['Start Time'])
+    #     # get the total wait time of all the processes
+    #     answer_dict[entry]['Total Wait Time'] = calculate_total_wait(answer_dict[entry]['End Time'], process_dict[entry]['Service Time'], process_dict[entry]['Arrival Time'])
+    # # print the dict
+    # print(f"Answers: {answer_dict}")
 
 if __name__ == "__main__":
     main()
