@@ -20,13 +20,14 @@ def create_deque(*iterables):
 
 def round_robin(process_deque):
     start_time = 0
-    quantum = 15
+    context_switch = 0
+    quantum = 2
     answer_dict = dict()
     # create a do while loop that continues until each process has been 'serviced'
-    while process_deque[0][2] >= 0:
-        print(f"Execution Time: {start_time}", process_deque)
+    while process_deque[0][3] >= 0:
+        
         # if a process's arrival time is <= the start time, then it has 'arrived'
-        if process_deque[0][1] <= start_time:
+        if process_deque[0][2] <= start_time:
             # if a process id is not in answer_dict, go into this if check
             if process_deque[0][0] not in answer_dict:
                 # add the process id into the answer_dict
@@ -34,21 +35,23 @@ def round_robin(process_deque):
                 # add the start time of each process into the answer_dict
                 answer_dict[process_deque[0][0]]['Start Time'] = start_time
             # decrement a process's service time by the quantum
-            process_deque[0][2] = process_deque[0][2] - quantum
+            process_deque[0][3] = process_deque[0][3] - quantum
             # increment the start time by the quantum
             start_time += quantum
             # if the last process in the deque is <= 0, do the stuff below
-            if process_deque[-1][-1] <= 0:
+            if process_deque[0][3] <= 0:
                 # add this process's end time (represented by the incremented start_time variable)
-                answer_dict[process_deque[-1][0]]['End Time'] = start_time
+                answer_dict[process_deque[0][0]]['End Time'] = start_time
                 # pop the 'serviced' process from the deque
-                process_deque.pop()
+                process_deque.popleft()
             # rotate the deque so the next process get's 'serviced'
             process_deque.rotate(-1)
         else: 
             # if a process doesn't pass the 'arrival' check, rotate the deque until one that
             # has arrived gets to the first position
             process_deque.rotate(-1)
+            start_time += quantum
+        print(f"Execution Time: {start_time}", process_deque)
         # if there's no more items left in the deque, break the while loop
         if len(process_deque) == 0:
             break
@@ -67,8 +70,6 @@ def main():
     list_of_processes = list(range(0,1000))
     master_list = scheduling.arrival_time(list_of_processes)
     master_list = scheduling.service_time(list_of_processes, master_list)
-    print(master_list)
-    # process_list = [[1,0,75],[2,10,40],[3,10,25],[4, 80,20],[5,85,45]]
     # process_dict = {
     #     1:{
     #         "Service Time":75,
@@ -91,18 +92,18 @@ def main():
     #         "Arrival Time":85
     #     }
     # }
-    # # create a deque of processes for round robin
-    # process_deque = create_deque(process_list)
-    # # store the answer dictionary which is the return value of the round_robin function
-    # answer_dict = round_robin(process_deque)
+    # create a deque of processes for round robin
+    process_deque = create_deque(master_list)
+    # store the answer dictionary which is the return value of the round_robin function
+    answer_dict = round_robin(process_deque)
 
-    # # for every process in the answer dict, do the stuff below
+    # for every process in the answer dict, do the stuff below
     # for entry in answer_dict:
-    #     # get the initial wait time for each process
+        # get the initial wait time for each process
     #     answer_dict[entry]['Initial Wait Time'] = calculate_init_wait(process_dict[entry]['Arrival Time'], answer_dict[entry]['Start Time'])
-    #     # get the total wait time of all the processes
+        # get the total wait time of all the processes
     #     answer_dict[entry]['Total Wait Time'] = calculate_total_wait(answer_dict[entry]['End Time'], process_dict[entry]['Service Time'], process_dict[entry]['Arrival Time'])
-    # # print the dict
+    # print the dict
     # print(f"Answers: {answer_dict}")
 
 if __name__ == "__main__":
