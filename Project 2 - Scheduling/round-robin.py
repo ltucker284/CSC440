@@ -4,8 +4,7 @@ generated amount of processes that have different arrival and service
 times and outputs their progress as execution time is incremented as well as
 the start time, end time, initial wait time, and total wait time for each process.
 
-CURRENT TODO:
-    - add in logic for context_switch time
+CURRENT TODO's:
     - fix logic for incrementing time if next process up hasn't arrived
 
 Class: CSC 440
@@ -28,8 +27,8 @@ def round_robin(process_deque):
     context_switch = 0
     quantum = 2
     answer_dict = dict()
-
     # create a do while loop that continues until each process has been 'serviced'
+    print(f"ORIGINAL PROCESS TIMES: {process_deque}")
     while process_deque[0][3] >= 0:
         # if a process's arrival time is <= the start time, then it has 'arrived'
         if process_deque[0][2] <= start_time:
@@ -46,11 +45,13 @@ def round_robin(process_deque):
                 start_time += process_deque[0][3]
                 answer_dict[process_deque[0][0]]['End Time'] = start_time
                 process_deque.popleft()
+                start_time += context_switch
             # if a process has time left to fill multiple quantums, follow the regular process
             elif process_deque[0][3] >= quantum:
                 process_deque[0][3] = process_deque[0][3] - quantum
                 start_time += quantum
                 process_deque.rotate(-1)
+                start_time += context_switch
             # if the current process in the deque has service time = 0, do the stuff below
             elif process_deque[0][3] == 0:
                 # add this process's end time (represented by the incremented start_time variable)
@@ -58,6 +59,7 @@ def round_robin(process_deque):
                 process_deque.popleft()
                 # rotate the deque so the next process get's 'serviced'
                 process_deque.rotate(-1)
+                start_time += context_switch
         else: 
             ### TODO Fix so we aren't idle if the next process up hasn't arrived
             """if a process doesn't pass the 'arrival' check, rotate the deque until one that
