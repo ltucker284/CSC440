@@ -4,6 +4,10 @@ generated amount of processes that have different arrival and service
 times and outputs their progress as execution time is incremented as well as
 the start time, end time, initial wait time, and total wait time for each process.
 
+CURRENT TODO:
+    - add in logic for context_switch time
+    - fix logic for incrementing time if next process up hasn't arrived
+
 Class: CSC 440
 Authors: Juan Matiz, Liz Tucker
 """
@@ -24,6 +28,7 @@ def round_robin(process_deque):
     context_switch = 0
     quantum = 2
     answer_dict = dict()
+
     # create a do while loop that continues until each process has been 'serviced'
     while process_deque[0][3] >= 0:
         # if a process's arrival time is <= the start time, then it has 'arrived'
