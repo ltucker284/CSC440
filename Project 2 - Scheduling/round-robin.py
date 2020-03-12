@@ -1,6 +1,7 @@
 """
-This script simulates the round robin scheduling process for a predetermined set of 5 
-processes and outputs their progress as execution time is incremented as well as
+This script simulates the round robin scheduling process for randomly 
+generated amount of processes that have different arrival and service 
+times and outputs their progress as execution time is incremented as well as
 the start time, end time, initial wait time, and total wait time for each process.
 
 Class: CSC 440
@@ -27,6 +28,9 @@ def round_robin(process_deque):
     while process_deque[0][3] >= 0:
         # if a process's arrival time is <= the start time, then it has 'arrived'
         if process_deque[0][2] <= start_time:
+            if process_deque[0][3] < quantum:
+                print("==================SERVICE TIME LESS THAN QUANTUM======================")
+                print(process_deque[0][3])
             # if a process id is not in answer_dict, go into this if check
             if process_deque[0][0] not in answer_dict:
                 # add the process id into the answer_dict
@@ -50,7 +54,7 @@ def round_robin(process_deque):
             # has arrived gets to the first position
             process_deque.rotate(-1)
             start_time += quantum
-        # print(f"Execution Time: {start_time}", process_deque)
+        print(f"Execution Time: {start_time}", process_deque)
         # if there's no more items left in the deque, break the while loop
         if len(process_deque) == 0:
             break
@@ -66,14 +70,13 @@ def calculate_total_wait(end_time, service_time, arrival_time):
     return end_time - service_time - arrival_time
 
 def main():
-    list_of_processes = list(range(0,1000))
+    list_of_processes = list(range(0,10))
     master_list = scheduling.arrival_time(list_of_processes)
     master_list = scheduling.service_time(list_of_processes, master_list)
     # create a deque of processes for round robin
     process_deque = create_deque(master_list)
     # store the answer dictionary which is the return value of the round_robin function
     answer_dict = round_robin(process_deque)
-
     # for every process in the answer dict, do the stuff below
     for entry in answer_dict:
         # get the initial wait time for each process
