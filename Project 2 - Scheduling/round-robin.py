@@ -33,7 +33,7 @@ def round_robin(process_deque):
                 answer_dict[process_deque[0][0]] = {}
                 answer_dict[process_deque[0][0]]['Start Time'] = start_time
             # if a service time is less than the assigned quantum, we don't want to waste time
-            if process_deque[0][3] < quantum:
+            if process_deque[0][3] < quantum and process_deque[0][3] > 0:
                 print()
                 print("==================SERVICE TIME LESS THAN QUANTUM======================")
                 print(f"PROCESS ID: {process_deque[0][0]}, SERVICE TIME: {process_deque[0][3]}")
