@@ -28,7 +28,7 @@ def arrival_time(list_of_processes):
             arrival_time = master_list[index-1][2] + master_list[index][1]  # Grabs the arrival time of the previous process and adds the interarrival time of the current process.
             master_list[index].append(arrival_time)
     
-    print(f"The Average Interarrival Time Is: {str(interarrival_time/len(list_of_processes))}")
+    print(f"The average interarrival time is: {str(interarrival_time/len(list_of_processes))}")
 
     return master_list
 
@@ -44,6 +44,7 @@ def service_time(list_of_processes, master_list):
     for time in service_time_dict:
         average_service_time += service_time_dict[time]
     print(f"\nThe average service time is : {str(average_service_time/len(list_of_processes))}")
+    print()
     return master_list
 
 # def create_dictinary(master_list):
