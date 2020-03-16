@@ -69,7 +69,7 @@ def round_robin(process_deque):
                 # print(f"Execution Time: {start_time}", process_deque)
                 process_deque.rotate(-1)
                 if process_deque[0] == entry:
-                    start_time+=quantum
+                    start_time+=1
                     continue
 
         print(f"Execution Time: {start_time}", process_deque)
@@ -88,7 +88,7 @@ def calculate_total_wait(end_time, service_time, arrival_time):
     return end_time - service_time - arrival_time
 
 def main():
-    list_of_processes = list(range(0,1000))
+    list_of_processes = list(range(0,10))
     master_list = scheduling.arrival_time(list_of_processes)
     master_list = scheduling.service_time(list_of_processes, master_list)
     # create a deque of processes for round robin
