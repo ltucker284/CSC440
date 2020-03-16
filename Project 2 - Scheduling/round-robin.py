@@ -36,7 +36,7 @@ def round_robin(process_deque):
             if process_deque[0][0] not in answer_dict:
                 answer_dict[process_deque[0][0]] = {}
                 answer_dict[process_deque[0][0]]['Start Time'] = start_time
-            # if a service time is less than the assigned quantum, we don't want to waste time
+            # if a service time is less than the assigned quantum, we don't want to waste time so pop it and start the next one
             if process_deque[0][3] < quantum and process_deque[0][3] > 0:
                 print()
                 print("==================SERVICE TIME LESS THAN QUANTUM======================")
@@ -62,10 +62,20 @@ def round_robin(process_deque):
                 start_time += context_switch
         else: 
             ### TODO Fix so we aren't idle if the next process up hasn't arrived
-            """if a process doesn't pass the 'arrival' check, rotate the deque until one that
-            has arrived gets to the first position """
-            process_deque.rotate(-1)
-            start_time += quantum
+            """
+            If a process doesn't pass the 'arrival' check, rotate the deque until one that
+            has arrived gets to the first position.
+            
+            If none have 'arrived', increment time.
+            """
+            entry = process_deque[0]
+            while process_deque[0][2] > start_time:
+                # print(f"Execution Time: {start_time}", process_deque)
+                process_deque.rotate(-1)
+                if process_deque[0] == entry:
+                    start_time+=quantum
+                    continue
+
         print(f"Execution Time: {start_time}", process_deque)
         # if there's no more items left in the deque, break the while loop
         if len(process_deque) == 0:
