@@ -4,9 +4,6 @@ generated amount of processes that have different arrival and service
 times and outputs their progress as execution time is incremented as well as
 the start time, end time, initial wait time, and total wait time for each process.
 
-CURRENT TODO's:
-    - fix logic for incrementing time if next process up hasn't arrived
-
 Class: CSC 440
 Authors: Juan Matiz, Liz Tucker
 """
@@ -61,7 +58,6 @@ def round_robin(process_deque):
                 process_deque.rotate(-1)
                 start_time += context_switch
         else: 
-            ### TODO Fix so we aren't idle if the next process up hasn't arrived
             """
             If a process doesn't pass the 'arrival' check, rotate the deque until one that
             has arrived gets to the first position.
@@ -92,7 +88,7 @@ def calculate_total_wait(end_time, service_time, arrival_time):
     return end_time - service_time - arrival_time
 
 def main():
-    list_of_processes = list(range(0,5))
+    list_of_processes = list(range(0,1000))
     master_list = scheduling.arrival_time(list_of_processes)
     master_list = scheduling.service_time(list_of_processes, master_list)
     # create a deque of processes for round robin
@@ -105,8 +101,8 @@ def main():
         answer_dict[entry]['Initial Wait Time'] = calculate_init_wait(master_list[entry][2], answer_dict[entry]['Start Time'])
         # get the total wait time of all the processes
         answer_dict[entry]['Total Wait Time'] = calculate_total_wait(answer_dict[entry]['End Time'], master_list[entry][3], master_list[entry][2])
-        # print answers
-        print(f"Answers: {answer_dict}")
+    # print answers
+    print(f"Answers: {answer_dict}")
 
 if __name__ == "__main__":
     main()
