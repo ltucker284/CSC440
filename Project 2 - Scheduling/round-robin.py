@@ -95,14 +95,21 @@ def main():
     process_deque = create_deque(master_list)
     # store the answer dictionary which is the return value of the round_robin function
     answer_dict = round_robin(process_deque)
+    print(f'{"PROCESS ID ":20}{"START TIME ":20}{"END TIME ":20}{"INITIAL WAIT ":20}{"TOTAL WAIT":20}')
     # for every process in the answer dict, do the stuff below
     for entry in answer_dict:
         # get the initial wait time for each process
         answer_dict[entry]['Initial Wait Time'] = calculate_init_wait(master_list[entry][2], answer_dict[entry]['Start Time'])
         # get the total wait time of all the processes
         answer_dict[entry]['Total Wait Time'] = calculate_total_wait(answer_dict[entry]['End Time'], master_list[entry][3], master_list[entry][2])
+        process_id = entry
+        start_time = answer_dict[entry]['Start Time']
+        end_time = answer_dict[entry]['End Time']
+        init_wait = answer_dict[entry]['Initial Wait Time']
+        total_wait = answer_dict[entry]['Total Wait Time']
+        print(f'{process_id:5}{start_time:20}{end_time:20}{init_wait:20}{total_wait:20}')
     # print answers
-    print(f"Answers: {answer_dict}")
+    # print(f"Answers: {answer_dict}")
 
 if __name__ == "__main__":
     main()
