@@ -14,7 +14,7 @@ def arrival_time(list_of_processes):
     interarrival_time = 0
 
     for process in list_of_processes:  # Iterates through a list of 100 processes.
-        interarrival_time = random.randint(4,10)  # Generates an integer between 4 and 8, inclusive.
+        interarrival_time = random.randint(2,6)  # Generates an integer between 2 and 6, inclusive.
         if process == list_of_processes[0]:  # First process does not get an interarrival time, thus it gets a zero for this value.
             master_list.append([process, 0])
         else:

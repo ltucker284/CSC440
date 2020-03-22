@@ -17,6 +17,11 @@ def create_deque(*iterables):
     for process in iterables:
         for process_info in process:
             process_deque.append(process_info)
+    return append_remaining_service_time_field(process_deque)
+
+def append_remaining_service_time_field(process_deque):
+    for process in process_deque:
+        process.append(0)
     return process_deque
 
 def round_robin(process_deque):
@@ -29,10 +34,17 @@ def round_robin(process_deque):
     while process_deque[0][3] >= 0:
         # if a process's arrival time is <= the start time, then it has 'arrived'
         if process_deque[0][2] <= start_time:
+            #if a process has not been serviced yet, and it is not process zero, rotate the deque
+            if process_deque[0][4] == 0:
+                process_deque.rotate(-1)
+                process_deque[-1][4] = 1
+                continue
             # if a process id is not in answer_dict, go into this if check
             if process_deque[0][0] not in answer_dict:
                 answer_dict[process_deque[0][0]] = {}
                 answer_dict[process_deque[0][0]]['Start Time'] = start_time
+                answer_dict[process_deque[0][0]]['Arrival Time'] = process_deque[0][2]
+                answer_dict[process_deque[0][0]]['Service Time'] = process_deque[0][3]
             # if a service time is less than the assigned quantum, we don't want to waste time so pop it and start the next one
             if process_deque[0][3] < quantum and process_deque[0][3] > 0:
                 print()
@@ -66,7 +78,6 @@ def round_robin(process_deque):
             """
             entry = process_deque[0]
             while process_deque[0][2] > start_time:
-                # print(f"Execution Time: {start_time}", process_deque)
                 process_deque.rotate(-1)
                 if process_deque[0] == entry:
                     start_time+=1
@@ -88,14 +99,14 @@ def calculate_total_wait(end_time, service_time, arrival_time):
     return end_time - service_time - arrival_time
 
 def main():
-    list_of_processes = list(range(0,10))
+    list_of_processes = list(range(0,100))
     master_list = scheduling.arrival_time(list_of_processes)
     master_list = scheduling.service_time(list_of_processes, master_list)
     # create a deque of processes for round robin
     process_deque = create_deque(master_list)
     # store the answer dictionary which is the return value of the round_robin function
     answer_dict = round_robin(process_deque)
-    print(f'{"PROCESS ID ":20}{"START TIME ":20}{"END TIME ":20}{"INITIAL WAIT ":20}{"TOTAL WAIT":20}')
+    print(f'{"PROCESS ID ":20}{"SERVICE TIME":20}{"ARRIVAL TIME ":20}{"START TIME ":20}{"END TIME ":20}{"INITIAL WAIT ":20}{"TOTAL WAIT":20}')
     # for every process in the answer dict, do the stuff below
     for entry in answer_dict:
         # get the initial wait time for each process
@@ -103,13 +114,14 @@ def main():
         # get the total wait time of all the processes
         answer_dict[entry]['Total Wait Time'] = calculate_total_wait(answer_dict[entry]['End Time'], master_list[entry][3], master_list[entry][2])
         process_id = entry
+        arrival_time = answer_dict[entry]['Arrival Time']
+        service_time = answer_dict[entry]['Service Time']
         start_time = answer_dict[entry]['Start Time']
         end_time = answer_dict[entry]['End Time']
         init_wait = answer_dict[entry]['Initial Wait Time']
         total_wait = answer_dict[entry]['Total Wait Time']
-        print(f'{process_id:5}{start_time:20}{end_time:20}{init_wait:20}{total_wait:20}')
-    # print answers
-    # print(f"Answers: {answer_dict}")
+        print(f'{process_id:5}{service_time:20}{arrival_time:20}{start_time:20}{end_time:20}{init_wait:20}{total_wait:20}')
+
 
 if __name__ == "__main__":
     main()
