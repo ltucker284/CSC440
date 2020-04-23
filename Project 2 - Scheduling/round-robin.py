@@ -30,7 +30,7 @@ def round_robin(process_deque):
     quantum = 2
     answer_dict = dict()
     # create a do while loop that continues until each process has been 'serviced'
-    print(f"Execution Time: {start_time}", process_deque)
+    # print(f"Execution Time: {start_time}", process_deque)
     while process_deque[0][3] >= 0:
         # if a process's arrival time is <= the start time, then it has 'arrived'
         if process_deque[0][2] <= start_time:
@@ -47,10 +47,10 @@ def round_robin(process_deque):
                 answer_dict[process_deque[0][0]]['Service Time'] = process_deque[0][3]
             # if a service time is less than the assigned quantum, we don't want to waste time so pop it and start the next one
             if process_deque[0][3] < quantum and process_deque[0][3] > 0:
-                print()
-                print("==================SERVICE TIME LESS THAN QUANTUM======================")
-                print(f"PROCESS ID: {process_deque[0][0]}, SERVICE TIME: {process_deque[0][3]}")
-                print()
+                # print()
+                # print("==================SERVICE TIME LESS THAN QUANTUM======================")
+                # print(f"PROCESS ID: {process_deque[0][0]}, SERVICE TIME: {process_deque[0][3]}")
+                # print()
                 start_time += process_deque[0][3]
                 answer_dict[process_deque[0][0]]['End Time'] = start_time
                 process_deque.popleft()
@@ -83,7 +83,7 @@ def round_robin(process_deque):
                     start_time+=1
                     continue
 
-        print(f"Execution Time: {start_time}", process_deque)
+        # print(f"Execution Time: {start_time}", process_deque)
         # if there's no more items left in the deque, break the while loop
         if len(process_deque) == 0:
             break
@@ -99,7 +99,7 @@ def calculate_total_wait(end_time, service_time, arrival_time):
     return end_time - service_time - arrival_time
 
 def main():
-    list_of_processes = list(range(0,100))
+    list_of_processes = list(range(0,20))
     master_list = scheduling.arrival_time(list_of_processes)
     master_list = scheduling.service_time(list_of_processes, master_list)
     # create a deque of processes for round robin
